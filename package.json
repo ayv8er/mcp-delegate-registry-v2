@@ -1,0 +1,25 @@
+{
+  "name": "mcp-delegate-registry-v1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "npm run build && npm run start"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.11.1",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "viem": "^2.29.1",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.15.17",
+    "typescript": "^5.8.3"
+  }
+}
