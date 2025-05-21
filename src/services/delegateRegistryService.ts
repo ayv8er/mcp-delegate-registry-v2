@@ -1,13 +1,7 @@
 import { http, encodeFunctionData, createPublicClient, type Hex, type Address } from "viem";
 import { delegateRegistryAbi } from '../abi/delegateRegistryAbi.js';
-import { mainnet } from "viem/chains";
-import { NETWORKS } from '../config.js';
+import { NETWORKS, NetworkName } from '../config.js';
 import "dotenv/config";
-
-export const publicClient = createPublicClient({
-  chain: mainnet,
-  transport: http(NETWORKS.mainnet.rpcUrl),
-});
 
 export interface BaseDelegationParams {
   delegatee: Address;
@@ -19,6 +13,37 @@ export interface TransactionParameters {
   data: Hex;
   value?: bigint;
   chainId: number;
+}
+
+export function createNetworkClient(network: NetworkName) {
+  const networkConfig = NETWORKS[network];
+  if (!networkConfig?.rpcUrl) {
+    throw new Error(`No RPC URL configured for network: ${network}`);
+  }
+
+  return createPublicClient({
+    chain: {
+      id: networkConfig.chainId,
+      name: networkConfig.displayName,
+      network: network,
+      nativeCurrency: {
+        // TODO: Add dynamic update of native currency for the network
+        decimals: 18,
+        name: 'Ether',
+        symbol: 'ETH',
+      },
+      rpcUrls: {
+        default: { 
+          http: [networkConfig.rpcUrl]
+        },
+        // TODO: Add dynamic update of public RPC URL for the network
+        public: {
+          http: [networkConfig.rpcUrl]
+        }
+      }
+    },
+    transport: http(networkConfig.rpcUrl)
+  });
 }
 
 export function prepareMulticallTransactionData(
