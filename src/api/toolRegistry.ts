@@ -9,17 +9,15 @@ import {
   TransactionParameters,
 } from "../services/delegateRegistryService.js";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { NETWORKS } from "../config.js";
 import { Hex } from "viem";
 import { z } from "zod";
-import { NETWORKS, NetworkType } from "../config.js";
 
-type ToolOperations = { 
-  success: true; 
-  transactionParameters: TransactionParameters 
-} | { 
-  success: false; 
-  error: string 
-};
+type ToolOperations = 
+  | { success: true; transactionParameters: TransactionParameters }
+  | { success: true; networks: NetworkResponse[] }
+  | { success: true; networkInfo: NetworkResponse }
+  | { success: false; error: string };
 
 interface NetworkResponse {
   displayName: string;
@@ -36,68 +34,68 @@ export function createMcpServerInstance(): McpServer {
 
   server.tool(
     "getSupportedNetworks",
-    "Get list of all supported networks for delegation",
+    "Get list of all supported networks for Delegate Registry v2",
+    {},
     async (): Promise<{ content: [{ type: "text"; text: string }] }> => {
-      const networks = Object.entries(NETWORKS).map(([key, net]): NetworkResponse => ({
-        displayName: net.displayName,
-        chainId: net.chainId,
-        contractAddress: net.contractAddress,
-      }));
+      let result: ToolOperations;
+      try {
+        const networks = Object.entries(NETWORKS).map(([key, net]): NetworkResponse => ({
+          displayName: net.displayName,
+          chainId: net.chainId,
+          contractAddress: net.contractAddress,
+        }));
+        result = { success: true, networks };
+      } catch (error: any) {
+        result = { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      }
       return {
-        content: [{ 
-          type: "text", 
-          text: JSON.stringify({ networks }) 
-        }]
+        content: [{ type: "text", text: JSON.stringify(result) }]
       };
     }
   );
 
   server.tool(
     "getNetworkInfo",
-    "Get detailed information about a specific network",
+    "Get detailed information about a specific supported network",
     {
       networkIdentifier: z.string().describe("Network name or chainId")
     },
     async (params: { 
       networkIdentifier: string 
     }): Promise<{ content: [{ type: "text"; text: string }] }> => {
-      const network = isNaN(Number(params.networkIdentifier)) 
-        ? NETWORKS[params.networkIdentifier.toLowerCase()]
-        : Object.values(NETWORKS).find(n => n.chainId === Number(params.networkIdentifier));
-      if (!network) {
-        return {
-          content: [{ 
-            type: "text", 
-            text: JSON.stringify({ 
-              error: "Network not found" 
-            }) 
-          }]
-        };
+      let result: ToolOperations;
+      try {
+        const network = isNaN(Number(params.networkIdentifier)) 
+          ? NETWORKS[params.networkIdentifier.toLowerCase()]
+          : Object.values(NETWORKS).find(n => n.chainId === Number(params.networkIdentifier));
+        
+        if (!network) {
+          result = { success: false, error: "Network not found" };
+        } else {
+          const networkInfo: NetworkResponse = {
+            displayName: network.displayName,
+            chainId: network.chainId,
+            contractAddress: network.contractAddress
+          };
+          result = { success: true, networkInfo };
+        }
+      } catch (error: any) {
+        result = { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
       }
-      const response: NetworkResponse = {
-        displayName: network.displayName,
-        chainId: network.chainId,
-        contractAddress: network.contractAddress
-      };
-      return {
-        content: [{ 
-          type: "text", 
-          text: JSON.stringify(response)
-        }]
-      };
+      return { content: [{ type: "text", text: JSON.stringify(result) }] };
     }
   );
 
   server.tool(
     "multicall",
-    "Prepares a multicall transaction to execute multiple actions on the Delegate Registry",
+    "Prepares a multicall transaction to execute multiple actions on the registry",
     {
-      network: z.string().describe("Network identifier"),
       encodedCalls: z.array(z.string()),
+      network: z.string().describe("Network identifier"),
     },
     async (params: {
-      network: string;
       encodedCalls: string[];
+      network: string;
     }): Promise<{ content: [{ type: "text"; text: string }] }> => {
       let result: ToolOperations;
       try {
@@ -121,16 +119,16 @@ export function createMcpServerInstance(): McpServer {
     "delegateAll",
     "Prepares transaction object for delegating all rights",
     {
-      network: z.string().describe("Network identifier"),
       delegatee: z.string(),
       rights: z.string(),
-      enable: z.boolean()
+      enable: z.boolean(),
+      network: z.string().describe("Network identifier"),
     },
     async (params: { 
-      network: string;
       delegatee: string;
       rights: string; 
       enable: boolean; 
+      network: string;
     }): Promise<{ content: [{ type: "text"; text: string }] }> => {
       let result: ToolOperations;
       try {
