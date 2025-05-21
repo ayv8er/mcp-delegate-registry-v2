@@ -1,5 +1,4 @@
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { Hex } from "viem";
+import { validateAddress, validateBigIntString, validateBytes32 } from "../validators.js";
 import {
   prepareMulticallTransactionData,
   prepareDelegateAllTransactionData,
@@ -9,18 +8,24 @@ import {
   prepareDelegateERC1155TransactionData,
   TransactionParameters,
 } from "../services/delegateRegistryService.js";
-import {
-  PrepareMulticallParamsSchema,
-  PrepareDelegateAllParamsSchema,
-  PrepareDelegateContractParamsSchema,
-  PrepareDelegateERC721ParamsSchema,
-  PrepareDelegateERC20ParamsSchema,
-  PrepareDelegateERC1155ParamsSchema,
-} from "../schemas/schemas.js";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { Hex } from "viem";
+import { z } from "zod";
+import { NETWORKS, NetworkType } from "../config.js";
 
-type ToolOperations = 
-  | { success: true; transactionParameters: TransactionParameters }
-  | { success: false; error: string };
+type ToolOperations = { 
+  success: true; 
+  transactionParameters: TransactionParameters 
+} | { 
+  success: false; 
+  error: string 
+};
+
+interface NetworkResponse {
+  displayName: string;
+  chainId: number;
+  contractAddress: string;
+}
 
 export function createMcpServerInstance(): McpServer {
   const server = new McpServer({
@@ -30,18 +35,82 @@ export function createMcpServerInstance(): McpServer {
   });
 
   server.tool(
+    "getSupportedNetworks",
+    "Get list of all supported networks for delegation",
+    async (): Promise<{ content: [{ type: "text"; text: string }] }> => {
+      const networks = Object.entries(NETWORKS).map(([key, net]): NetworkResponse => ({
+        displayName: net.displayName,
+        chainId: net.chainId,
+        contractAddress: net.contractAddress,
+      }));
+      return {
+        content: [{ 
+          type: "text", 
+          text: JSON.stringify({ networks }) 
+        }]
+      };
+    }
+  );
+
+  server.tool(
+    "getNetworkInfo",
+    "Get detailed information about a specific network",
+    {
+      networkIdentifier: z.string().describe("Network name or chainId")
+    },
+    async (params: { 
+      networkIdentifier: string 
+    }): Promise<{ content: [{ type: "text"; text: string }] }> => {
+      const network = isNaN(Number(params.networkIdentifier)) 
+        ? NETWORKS[params.networkIdentifier.toLowerCase()]
+        : Object.values(NETWORKS).find(n => n.chainId === Number(params.networkIdentifier));
+      if (!network) {
+        return {
+          content: [{ 
+            type: "text", 
+            text: JSON.stringify({ 
+              error: "Network not found" 
+            }) 
+          }]
+        };
+      }
+      const response: NetworkResponse = {
+        displayName: network.displayName,
+        chainId: network.chainId,
+        contractAddress: network.contractAddress
+      };
+      return {
+        content: [{ 
+          type: "text", 
+          text: JSON.stringify(response)
+        }]
+      };
+    }
+  );
+
+  server.tool(
     "multicall",
     "Prepares a multicall transaction to execute multiple actions on the Delegate Registry",
-    PrepareMulticallParamsSchema.shape,
+    {
+      network: z.string().describe("Network identifier"),
+      encodedCalls: z.array(z.string()),
+    },
     async (params: {
+      network: string;
       encodedCalls: string[];
     }): Promise<{ content: [{ type: "text"; text: string }] }> => {
       let result: ToolOperations;
       try {
-        const txData = prepareMulticallTransactionData({ encodedCalls: params.encodedCalls as Hex[] });
+        const validatedParams = {
+          encodedCalls: params.encodedCalls.map(call => 
+            validateBytes32(call, "encodedCall")
+          ) as Hex[],
+          chainId: NETWORKS[params.network].chainId,
+          contractAddress: NETWORKS[params.network].contractAddress
+        };
+        const txData = prepareMulticallTransactionData(validatedParams as any);
         result = { success: true, transactionParameters: { ...txData, value: txData.value?.toString() } as any };
-      } catch (error) {
-        console.error('multicall tool error:', error);
+      } catch (error: any) {
         result = { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
       }
       return { content: [{ type: "text", text: JSON.stringify(result) }] };
@@ -49,20 +118,32 @@ export function createMcpServerInstance(): McpServer {
   );
 
   server.tool(
-    "delegate_all",
+    "delegateAll",
     "Prepares transaction object for delegating all rights",
-    PrepareDelegateAllParamsSchema.shape,
+    {
+      network: z.string().describe("Network identifier"),
+      delegatee: z.string(),
+      rights: z.string(),
+      enable: z.boolean()
+    },
     async (params: { 
-      delegateeAddress: string; 
+      network: string;
+      delegatee: string;
       rights: string; 
       enable: boolean; 
     }): Promise<{ content: [{ type: "text"; text: string }] }> => {
       let result: ToolOperations;
       try {
-        const txData = prepareDelegateAllTransactionData(params as any);
+        const validatedParams = {
+          delegatee: validateAddress(params.delegatee, "delegatee"),
+          rights: validateBytes32(params.rights, "rights"),
+          enable: params.enable,
+          chainId: NETWORKS[params.network].chainId,
+          contractAddress: NETWORKS[params.network].contractAddress
+        };
+        const txData = prepareDelegateAllTransactionData(validatedParams as any);
         result = { success: true, transactionParameters: { ...txData, value: txData.value?.toString() } as any };
-      } catch (error) {
-        console.error('delegate_all tool error:', error);
+      } catch (error: any) {
         result = { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
       }
       return { content: [{ type: "text", text: JSON.stringify(result) }] };
@@ -70,20 +151,35 @@ export function createMcpServerInstance(): McpServer {
   );
 
   server.tool(
-    "delegate_contract",
+    "delegateContract",
     "Prepares transaction object for delegating rights of a contract",
-    PrepareDelegateContractParamsSchema.shape, 
+    {
+      delegatee: z.string(),
+      contractToDelegate: z.string(),
+      rights: z.string(),
+      enable: z.boolean(),
+      network: z.string().describe("Network identifier")
+    },
     async (params: { 
-      delegateeAddress: string; 
+      delegatee: string; 
       contractToDelegate: string; 
       rights: string; 
       enable: boolean; 
+      network: string;
     }): Promise<{ content: [{ type: "text"; text: string }] }> => {
       let result: ToolOperations;
       try {
-        const txData = prepareDelegateContractTransactionData(params as any);
+        const validatedParams = {
+          delegatee: validateAddress(params.delegatee, "delegatee"),
+          contractToDelegate: validateAddress(params.contractToDelegate, "contractToDelegate"),
+          rights: validateBytes32(params.rights, "rights"),
+          enable: params.enable,
+          chainId: NETWORKS[params.network].chainId,
+          contractAddress: NETWORKS[params.network].contractAddress
+        };
+        const txData = prepareDelegateContractTransactionData(validatedParams as any);
         result = { success: true, transactionParameters: { ...txData, value: txData.value?.toString() } as any };
-      } catch (error) {
+      } catch (error: any) {
         result = { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
       }
       return { content: [{ type: "text", text: JSON.stringify(result) }] };
@@ -91,25 +187,42 @@ export function createMcpServerInstance(): McpServer {
   );
 
   server.tool(
-    "delegate_erc_721",
+    "delegateERC721",
     "Prepares transaction object for delegating rights for a specific ERC721 token",
-    PrepareDelegateERC721ParamsSchema.shape, 
+    {
+      delegatee: z.string(),
+      contractToDelegate: z.string(),
+      tokenId: z.string(),
+      rights: z.string(),
+      enable: z.boolean(),
+      network: z.string().describe("Network identifier")
+    },
     async (params: { 
-      delegateeAddress: string; 
+      delegatee: string; 
       contractToDelegate: string; 
       tokenId: string;
       rights: string; 
       enable: boolean; 
+      network: string;
     }): Promise<{ content: [{ type: "text"; text: string }] }> => {
       let result: ToolOperations;
       try {
-        const functionParams = {
-          ...params,
+        const validatedParams = {
+          delegatee: validateAddress(params.delegatee, "delegatee"),
+          contractToDelegate: validateAddress(params.contractToDelegate, "contractToDelegate"),
+          tokenId: validateBigIntString(params.tokenId, "tokenId"),
+          rights: validateBytes32(params.rights, "rights"),
+          enable: params.enable,
+          chainId: NETWORKS[params.network].chainId,
+          contractAddress: NETWORKS[params.network].contractAddress
+        };
+        const transformedParams = {
+          ...validatedParams,
           tokenId: BigInt(params.tokenId),
         };
-        const txData = prepareDelegateERC721TransactionData(functionParams as any);
+        const txData = prepareDelegateERC721TransactionData(transformedParams as any);
         result = { success: true, transactionParameters: { ...txData, value: txData.value?.toString() } as any };
-      } catch (error) {
+      } catch (error: any) {
         result = { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
       }
       return { content: [{ type: "text", text: JSON.stringify(result) }] };
@@ -117,24 +230,39 @@ export function createMcpServerInstance(): McpServer {
   );
 
   server.tool(
-    "delegate_erc_20",
+    "delegateERC20",
     "Prepares transaction object for delegating rights for an amount of ERC20 tokens",
-    PrepareDelegateERC20ParamsSchema.shape, 
+    {
+      delegatee: z.string(),
+      contractToDelegate: z.string(),
+      rights: z.string(),
+      amount: z.string(),
+      network: z.string().describe("Network identifier")
+    },
     async (params: { 
-      delegateeAddress: string; 
+      delegatee: string; 
       contractToDelegate: string; 
       rights: string; 
       amount: string; 
+      network: string;
     }): Promise<{ content: [{ type: "text"; text: string }] }> => {
       let result: ToolOperations;
       try {
-        const functionParams = {
-          ...params,
+        const validatedParams = {
+          delegatee: validateAddress(params.delegatee, "delegatee"),
+          contractToDelegate: validateAddress(params.contractToDelegate, "contractToDelegate"),
+          rights: validateBytes32(params.rights, "rights"),
+          amount: validateBigIntString(params.amount, "amount"),
+          chainId: NETWORKS[params.network].chainId,
+          contractAddress: NETWORKS[params.network].contractAddress
+        };
+        const transformedParams = {
+          ...validatedParams,
           amount: BigInt(params.amount),
         };
-        const txData = prepareDelegateERC20TransactionData(functionParams as any);
+        const txData = prepareDelegateERC20TransactionData(transformedParams as any);
         result = { success: true, transactionParameters: { ...txData, value: txData.value?.toString() } as any };
-      } catch (error) {
+      } catch (error: any) {
         result = { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
       }
       return { content: [{ type: "text", text: JSON.stringify(result) }] };
@@ -142,26 +270,42 @@ export function createMcpServerInstance(): McpServer {
   );
 
   server.tool(
-    "delegate_erc_1155",
+    "delegateERC1155",
     "Prepares transaction object for delegating rights for an amount of an ERC1155 token",
-    PrepareDelegateERC1155ParamsSchema.shape, 
+    {
+      delegatee: z.string(),
+      contractToDelegate: z.string(),
+      tokenId: z.string(),
+      rights: z.string(),
+      amount: z.string(),
+      network: z.string().describe("Network identifier")
+    },
     async (params: { 
-      delegateeAddress: string; 
+      delegatee: string; 
       contractToDelegate: string; 
       tokenId: string; 
       rights: string; 
       amount: string; 
+      network: string;
     }): Promise<{ content: [{ type: "text"; text: string }] }> => {
       let result: ToolOperations;
       try {
-        const functionParams = {
-          ...params,
-          tokenId: BigInt(params.tokenId),
-          amount: BigInt(params.amount),
+        const validatedParams = {
+          delegatee: validateAddress(params.delegatee, "delegatee"),
+          contractToDelegate: validateAddress(params.contractToDelegate, "contractToDelegate"),
+          tokenId: validateBigIntString(params.tokenId, "tokenId"),
+          rights: validateBytes32(params.rights, "rights"),
+          amount: validateBigIntString(params.amount, "amount"),
+          chainId: NETWORKS[params.network].chainId,
+          contractAddress: NETWORKS[params.network].contractAddress
         };
-        const txData = prepareDelegateERC1155TransactionData(functionParams as any);
+        const transformedParams = {
+          ...validatedParams,
+          tokenId: BigInt(params.tokenId),
+        };
+        const txData = prepareDelegateERC1155TransactionData(transformedParams as any);
         result = { success: true, transactionParameters: { ...txData, value: txData.value?.toString() }as any };
-      } catch (error) {
+      } catch (error: any) {
         result = { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
       }
       return { content: [{ type: "text", text: JSON.stringify(result) }] };

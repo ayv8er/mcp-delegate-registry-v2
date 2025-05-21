@@ -1,116 +1,299 @@
 export const delegateRegistryAbi = [
   {
-    type: "function",
+    inputs: [],
+    name: "MulticallFailed",
+    type: "error"
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "from", type: "address" },
+      { indexed: true, internalType: "address", name: "to", type: "address" },
+      { indexed: false, internalType: "bytes32", name: "rights", type: "bytes32" },
+      { indexed: false, internalType: "bool", name: "enable", type: "bool" }
+    ],
+    name: "DelegateAll",
+    type: "event"
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "from", type: "address" },
+      { indexed: true, internalType: "address", name: "to", type: "address" },
+      { indexed: true, internalType: "address", name: "contract_", type: "address" },
+      { indexed: false, internalType: "bytes32", name: "rights", type: "bytes32" },
+      { indexed: false, internalType: "bool", name: "enable", type: "bool" }
+    ],
+    name: "DelegateContract",
+    type: "event"
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "from", type: "address" },
+      { indexed: true, internalType: "address", name: "to", type: "address" },
+      { indexed: true, internalType: "address", name: "contract_", type: "address" },
+      { indexed: false, internalType: "uint256", name: "tokenId", type: "uint256" },
+      { indexed: false, internalType: "bytes32", name: "rights", type: "bytes32" },
+      { indexed: false, internalType: "uint256", name: "amount", type: "uint256" }
+    ],
+    name: "DelegateERC1155",
+    type: "event"
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "from", type: "address" },
+      { indexed: true, internalType: "address", name: "to", type: "address" },
+      { indexed: true, internalType: "address", name: "contract_", type: "address" },
+      { indexed: false, internalType: "bytes32", name: "rights", type: "bytes32" },
+      { indexed: false, internalType: "uint256", name: "amount", type: "uint256" }
+    ],
+    name: "DelegateERC20",
+    type: "event"
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "from", type: "address" },
+      { indexed: true, internalType: "address", name: "to", type: "address" },
+      { indexed: true, internalType: "address", name: "contract_", type: "address" },
+      { indexed: false, internalType: "uint256", name: "tokenId", type: "uint256" },
+      { indexed: false, internalType: "bytes32", name: "rights", type: "bytes32" },
+      { indexed: false, internalType: "bool", name: "enable", type: "bool" }
+    ],
+    name: "DelegateERC721",
+    type: "event"
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "bytes32", name: "rights", type: "bytes32" }
+    ],
     name: "checkDelegateForAll",
-    inputs: [
-      { name: "to", type: "address", internalType: "address" },
-      { name: "from", type: "address", internalType: "address" },
-      { name: "rights", type: "bytes32", internalType: "bytes32" },
-    ],
-    outputs: [{ name: "", type: "bool", internalType: "bool" }],
+    outputs: [{ internalType: "bool", name: "valid", type: "bool" }],
     stateMutability: "view",
+    type: "function"
   },
   {
-    type: "function",
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "contract_", type: "address" },
+      { internalType: "bytes32", name: "rights", type: "bytes32" }
+    ],
     name: "checkDelegateForContract",
-    inputs: [
-      { name: "to", type: "address", internalType: "address" },
-      { name: "from", type: "address", internalType: "address" },
-      { name: "contract_", type: "address", internalType: "address" },
-      { name: "rights", type: "bytes32", internalType: "bytes32" },
-    ],
-    outputs: [{ name: "", type: "bool", internalType: "bool" }],
+    outputs: [{ internalType: "bool", name: "valid", type: "bool" }],
     stateMutability: "view",
+    type: "function"
   },
   {
-    type: "function",
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "contract_", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+      { internalType: "bytes32", name: "rights", type: "bytes32" }
+    ],
+    name: "checkDelegateForERC1155",
+    outputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "contract_", type: "address" },
+      { internalType: "bytes32", name: "rights", type: "bytes32" }
+    ],
+    name: "checkDelegateForERC20",
+    outputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "contract_", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+      { internalType: "bytes32", name: "rights", type: "bytes32" }
+    ],
     name: "checkDelegateForERC721",
-    inputs: [
-      { name: "to", type: "address", internalType: "address" },
-      { name: "from", type: "address", internalType: "address" },
-      { name: "contract_", type: "address", internalType: "address" },
-      { name: "tokenId", type: "uint256", internalType: "uint256" },
-      { name: "rights", type: "bytes32", internalType: "bytes32" },
-    ],
-    outputs: [{ name: "", type: "bool", internalType: "bool" }],
+    outputs: [{ internalType: "bool", name: "valid", type: "bool" }],
     stateMutability: "view",
+    type: "function"
   },
   {
-    type: "function",
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "bytes32", name: "rights", type: "bytes32" },
+      { internalType: "bool", name: "enable", type: "bool" }
+    ],
+    name: "delegateAll",
+    outputs: [{ internalType: "bytes32", name: "hash", type: "bytes32" }],
+    stateMutability: "payable",
+    type: "function"
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "address", name: "contract_", type: "address" },
+      { internalType: "bytes32", name: "rights", type: "bytes32" },
+      { internalType: "bool", name: "enable", type: "bool" }
+    ],
+    name: "delegateContract",
+    outputs: [{ internalType: "bytes32", name: "hash", type: "bytes32" }],
+    stateMutability: "payable",
+    type: "function"
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "address", name: "contract_", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+      { internalType: "bytes32", name: "rights", type: "bytes32" },
+      { internalType: "uint256", name: "amount", type: "uint256" }
+    ],
+    name: "delegateERC1155",
+    outputs: [{ internalType: "bytes32", name: "hash", type: "bytes32" }],
+    stateMutability: "payable",
+    type: "function"
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "address", name: "contract_", type: "address" },
+      { internalType: "bytes32", name: "rights", type: "bytes32" },
+      { internalType: "uint256", name: "amount", type: "uint256" }
+    ],
+    name: "delegateERC20",
+    outputs: [{ internalType: "bytes32", name: "hash", type: "bytes32" }],
+    stateMutability: "payable",
+    type: "function"
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "address", name: "contract_", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+      { internalType: "bytes32", name: "rights", type: "bytes32" },
+      { internalType: "bool", name: "enable", type: "bool" }
+    ],
     name: "delegateERC721",
-    inputs: [
-      { name: "to", type: "address", internalType: "address" },
-      { name: "contract_", type: "address", internalType: "address" },
-      { name: "tokenId", type: "uint256", internalType: "uint256" },
-      { name: "rights", type: "bytes32", internalType: "bytes32" },
-      { name: "enable", type: "bool", internalType: "bool" },
-    ],
-    outputs: [{ name: "delegationHash", type: "bytes32", internalType: "bytes32" }],
+    outputs: [{ internalType: "bytes32", name: "hash", type: "bytes32" }],
     stateMutability: "payable",
+    type: "function"
   },
   {
-    type: "function",
+    inputs: [{ internalType: "bytes32[]", name: "hashes", type: "bytes32[]" }],
+    name: "getDelegationsFromHashes",
+    outputs: [{
+      components: [
+        { internalType: "enum IDelegateRegistry.DelegationType", name: "type_", type: "uint8" },
+        { internalType: "address", name: "to", type: "address" },
+        { internalType: "address", name: "from", type: "address" },
+        { internalType: "bytes32", name: "rights", type: "bytes32" },
+        { internalType: "address", name: "contract_", type: "address" },
+        { internalType: "uint256", name: "tokenId", type: "uint256" },
+        { internalType: "uint256", name: "amount", type: "uint256" }
+      ],
+      internalType: "struct IDelegateRegistry.Delegation[]",
+      name: "delegations_",
+      type: "tuple[]"
+    }],
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    inputs: [{ internalType: "address", name: "to", type: "address" }],
+    name: "getIncomingDelegationHashes",
+    outputs: [{ internalType: "bytes32[]", name: "delegationHashes", type: "bytes32[]" }],
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    inputs: [{ internalType: "address", name: "to", type: "address" }],
     name: "getIncomingDelegations",
-    inputs: [{ name: "to", type: "address", internalType: "address" }],
-    outputs: [
-      {
-        name: "delegations",
-        type: "tuple[]",
-        internalType: "struct IDelegateRegistry.Delegation[]",
-        components: [
-          { name: "type_", type: "uint8", internalType: "enum IDelegateRegistry.DelegationType" },
-          { name: "to", type: "address", internalType: "address" },
-          { name: "from", type: "address", internalType: "address" },
-          { name: "rights", type: "bytes32", internalType: "bytes32" },
-          { name: "contract_", type: "address", internalType: "address" },
-          { name: "tokenId", type: "uint256", internalType: "uint256" },
-          { name: "amount", type: "uint256", internalType: "uint256" },
-        ],
-      },
-    ],
+    outputs: [{
+      components: [
+        { internalType: "enum IDelegateRegistry.DelegationType", name: "type_", type: "uint8" },
+        { internalType: "address", name: "to", type: "address" },
+        { internalType: "address", name: "from", type: "address" },
+        { internalType: "bytes32", name: "rights", type: "bytes32" },
+        { internalType: "address", name: "contract_", type: "address" },
+        { internalType: "uint256", name: "tokenId", type: "uint256" },
+        { internalType: "uint256", name: "amount", type: "uint256" }
+      ],
+      internalType: "struct IDelegateRegistry.Delegation[]",
+      name: "delegations_",
+      type: "tuple[]"
+    }],
     stateMutability: "view",
+    type: "function"
   },
   {
-    type: "function",
+    inputs: [{ internalType: "address", name: "from", type: "address" }],
+    name: "getOutgoingDelegationHashes",
+    outputs: [{ internalType: "bytes32[]", name: "delegationHashes", type: "bytes32[]" }],
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    inputs: [{ internalType: "address", name: "from", type: "address" }],
     name: "getOutgoingDelegations",
-    inputs: [{ name: "from", type: "address", internalType: "address" }],
-    outputs: [
-      {
-        name: "delegations",
-        type: "tuple[]",
-        internalType: "struct IDelegateRegistry.Delegation[]",
-        components: [
-          { name: "type_", type: "uint8", internalType: "enum IDelegateRegistry.DelegationType" },
-          { name: "to", type: "address", internalType: "address" },
-          { name: "from", type: "address", internalType: "address" },
-          { name: "rights", type: "bytes32", internalType: "bytes32" },
-          { name: "contract_", type: "address", internalType: "address" },
-          { name: "tokenId", type: "uint256", internalType: "uint256" },
-          { name: "amount", type: "uint256", internalType: "uint256" },
-        ],
-      },
-    ],
+    outputs: [{
+      components: [
+        { internalType: "enum IDelegateRegistry.DelegationType", name: "type_", type: "uint8" },
+        { internalType: "address", name: "to", type: "address" },
+        { internalType: "address", name: "from", type: "address" },
+        { internalType: "bytes32", name: "rights", type: "bytes32" },
+        { internalType: "address", name: "contract_", type: "address" },
+        { internalType: "uint256", name: "tokenId", type: "uint256" },
+        { internalType: "uint256", name: "amount", type: "uint256" }
+      ],
+      internalType: "struct IDelegateRegistry.Delegation[]",
+      name: "delegations_",
+      type: "tuple[]"
+    }],
     stateMutability: "view",
+    type: "function"
   },
   {
-    type: "function",
+    inputs: [{ internalType: "bytes[]", name: "data", type: "bytes[]" }],
     name: "multicall",
-    inputs: [{ name: "data", type: "bytes[]", internalType: "bytes[]" }],
-    outputs: [{ name: "results", type: "bytes[]", internalType: "bytes[]" }],
+    outputs: [{ internalType: "bytes[]", name: "results", type: "bytes[]" }],
     stateMutability: "payable",
+    type: "function"
   },
   {
-    type: "function",
+    inputs: [{ internalType: "bytes32", name: "location", type: "bytes32" }],
     name: "readSlot",
-    inputs: [{ name: "location", type: "bytes32", internalType: "bytes32" }],
-    outputs: [{ name: "", type: "bytes32", internalType: "bytes32" }],
+    outputs: [{ internalType: "bytes32", name: "contents", type: "bytes32" }],
     stateMutability: "view",
+    type: "function"
   },
   {
-    type: "function",
+    inputs: [{ internalType: "bytes32[]", name: "locations", type: "bytes32[]" }],
     name: "readSlots",
-    inputs: [{ name: "locations", type: "bytes32[]", internalType: "bytes32[]" }],
-    outputs: [{ name: "", type: "bytes32[]", internalType: "bytes32[]" }],
+    outputs: [{ internalType: "bytes32[]", name: "contents", type: "bytes32[]" }],
     stateMutability: "view",
+    type: "function"
   },
-];
+  {
+    inputs: [{ internalType: "bytes4", name: "interfaceId", type: "bytes4" }],
+    name: "supportsInterface",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "pure",
+    type: "function"
+  },
+  {
+    inputs: [],
+    name: "sweep",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function"
+  }
+] as const;
