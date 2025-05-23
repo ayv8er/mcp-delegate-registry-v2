@@ -182,3 +182,124 @@ curl -X POST \
         "id": "curl-request-delegate-ERC-1155"
     }'
 ```
+
+### checkDelegateForAll
+*Check if delegatee is granted to act on behalf of delegator for all operations*
+```bash
+curl -X POST \
+    http://localhost:8080/delegate-registry-v2/mcp \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json, text/event-stream' \
+    -d '{
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+            "name": "checkDelegateForAll",
+            "arguments": {
+                "delegatee": "0xDd555E39F07f46F1dD7c39034Ce19A094CcA710f",
+                "delegator": "0x9f761675CfAE369dA99Ef0B2A2515EF215077087",
+                "rights": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "network": "ethereum"
+            }
+        },
+        "id": "curl-request-check-delegate-all"
+    }'
+```
+
+### checkDelegateForContract
+*Check if delegatee is granted to act on behalf of delegator for a specific contract*
+```bash
+curl -X POST \
+    http://localhost:8080/delegate-registry-v2/mcp \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json, text/event-stream' \
+    -d '{
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+            "name": "checkDelegateForContract",
+            "arguments": {
+                "delegatee": "0xDd555E39F07f46F1dD7c39034Ce19A094CcA710f",
+                "delegator": "0x9f761675CfAE369dA99Ef0B2A2515EF215077087",
+                "contractToDelegate": "0xD4416b13d2b3a9aBae7AcD5D6C2BbDBE25686401",
+                "rights": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "network": "ethereum"
+            }
+        },
+        "id": "curl-request-check-delegate-for-contract"
+    }'
+```
+
+### checkDelegateForERC721
+*Check if delegatee is granted to act on behalf of delegator for a specific ERC721 token*
+```bash
+curl -X POST \
+    http://localhost:8080/delegate-registry-v2/mcp \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json, text/event-stream' \
+    -d '{
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+            "name": "checkDelegateForERC721",
+            "arguments": {
+                "delegatee": "0xDd555E39F07f46F1dD7c39034Ce19A094CcA710f",
+                "delegator": "0x9f761675CfAE369dA99Ef0B2A2515EF215077087",
+                "contractToDelegate": "0xD4416b13d2b3a9aBae7AcD5D6C2BbDBE25686401",
+                "tokenId": "3",
+                "rights": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "network": "ethereum"
+            }
+        },
+        "id": "curl-request-check-delegate-for-ERC-721"
+    }'
+```
+
+### checkDelegateForERC20
+*Check if delegatee is granted to act on behalf of delegator for an amount of ERC20 tokens*
+```bash
+curl -X POST \
+    http://localhost:8080/delegate-registry-v2/mcp \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json, text/event-stream' \
+    -d '{
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+            "name": "checkDelegateForERC20",
+            "arguments": {
+                "delegatee": "0xDd555E39F07f46F1dD7c39034Ce19A094CcA710f",
+                "delegator": "0x9f761675CfAE369dA99Ef0B2A2515EF215077087",
+                "contractToDelegate": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+                "rights": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "network": "ethereum"
+            }
+        },
+        "id": "curl-request-check-delegate-for-ERC-20"
+    }'
+```
+
+### checkDelegateForERC1155
+*Check if delegatee is granted to act on behalf of delegator for an amount of ERC1155 tokens*
+```bash
+curl -X POST \
+    http://localhost:8080/delegate-registry-v2/mcp \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json, text/event-stream' \
+    -d '{
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+            "name": "checkDelegateForERC1155",
+            "arguments": {
+                "delegatee": "0xDd555E39F07f46F1dD7c39034Ce19A094CcA710f",
+                "delegator": "0x9f761675CfAE369dA99Ef0B2A2515EF215077087",
+                "contractToDelegate": "0xD4416b13d2b3a9aBae7AcD5D6C2BbDBE25686401",
+                "tokenId": "4",
+                "rights": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "network": "ethereum"
+            }
+        },
+        "id": "curl-request-check-delegate-for-ERC-1155"
+    }'
+```
