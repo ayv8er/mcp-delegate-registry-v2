@@ -1,248 +1,243 @@
-export interface NetworkInfo {
-  displayName: string;
-  chainId: number;
-  contractAddress: string;
-  rpcUrl?: string;
-}
+import type { NetworkConfig } from "./types/types";
 
 export const DELEGATE_REGISTRY_ADDRESSES = {
   EVM: "0x00000000000000447e69651d841bD8D104Bed493",
   ZKSYNC: "0x0000000059A24EB229eED07Ac44229DB56C5d797"
 } as const;
 
-export const NETWORKS: Record<string, NetworkInfo> = {
+export const NETWORKS: Record<string, NetworkConfig> = {
   ethereum: {
-    displayName: "Ethereum",
+    displayName: "ethereum",
     chainId: 1,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   apechain: {
-    displayName: "Apechain",
+    displayName: "apechain",
     chainId: 33139,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://apechain-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   arbitrum: {
-    displayName: "Arbitrum One",
+    displayName: "arbitrum one",
     chainId: 42161,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://arb-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   arbitrum_nova: {
-    displayName: "Arbitrum Nova",
+    displayName: "arbitrum nova",
     chainId: 42170,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://arbnova-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   avalanche: {
-    displayName: "Avalanche",
+    displayName: "avalanche",
     chainId: 43114,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://avax-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   base: {
-    displayName: "Base",
+    displayName: "base",
     chainId: 8453,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://base-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   blast: {
-    displayName: "Blast",
+    displayName: "blast",
     chainId: 238,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://blast-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   bnb: {
-    displayName: "BNB Chain",
+    displayName: "bnb chain",
     chainId: 56,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://bnb-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   canto: {
-    displayName: "Canto",
+    displayName: "canto",
     chainId: 7700,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://canto-rpc.ansybl.io`
   },
   celo: {
-    displayName: "Celo",
+    displayName: "celo",
     chainId: 42220,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://celo-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   fantom: {
-    displayName: "Fantom",
+    displayName: "fantom",
     chainId: 250,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://fantom-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   gnosis: {
-    displayName: "Gnosis",
+    displayName: "gnosis",
     chainId: 100,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://gnosis-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   hychain: {
-    displayName: "Hychain",
+    displayName: "hychain",
     chainId: 2911,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://rpc.hychain.com/http`
   },
   linea: {
-    displayName: "Linea",
+    displayName: "linea",
     chainId: 59144,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://linea-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   mantle: {
-    displayName: "Mantle",
+    displayName: "mantle",
     chainId: 5000,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://mantle-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   moonbeam: {
-    displayName: "Moonbeam",
+    displayName: "moonbeam",
     chainId: 1284,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://rpc.api.moonbeam.network`
   },
   moonriver: {
-    displayName: "Moonriver",
+    displayName: "moonriver",
     chainId: 1285,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://rpc.api.moonriver.moonbeam.network`
   },
   optimism: {
-    displayName: "Optimism",
+    displayName: "optimism",
     chainId: 10,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://opt-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   polygon: {
-    displayName: "Polygon",
+    displayName: "polygon",
     chainId: 137,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://polygon-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   polygon_zkevm: {
-    displayName: "Polygon zkEVM",
+    displayName: "polygon zkevm",
     chainId: 1101,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://polygonzkevm-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   plume: {
-    displayName: "Plume",
+    displayName: "plume",
     chainId: 98866,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: "https://rpc.plume.org"
   },
   ronin: {
-    displayName: "Ronin",
+    displayName: "ronin",
     chainId: 2020,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://ronin-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   sanko: {
-    displayName: "Sanko",
+    displayName: "sanko",
     chainId: 1996,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://mainnet.sanko.xyz`
   },
   scroll: {
-    displayName: "Scroll",
+    displayName: "scroll",
     chainId: 534352,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://scroll-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   sei: {
-    displayName: "Sei",
+    displayName: "sei",
     chainId: 1329,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://sei-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   shape: {
-    displayName: "Shape",
+    displayName: "shape",
     chainId: 360,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://shape-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   taiko: {
-    displayName: "Taiko",
+    displayName: "taiko",
     chainId: 167000,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://rpc.taiko.xyz`
   },
   xai: {
-    displayName: "XAI",
+    displayName: "xai",
     chainId: 660279,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://xai-chain.net/rpc`
   },
   zetachain: {
-    displayName: "ZetaChain",
+    displayName: "zetachain",
     chainId: 7000,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://zetachain-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   zora: {
-    displayName: "Zora",
+    displayName: "zora",
     chainId: 7777777,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://zora-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   abstract: {
-    displayName: "Abstract",
+    displayName: "abstract",
     chainId: 2741,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.ZKSYNC,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.ZKSYNC,
     rpcUrl: `https://abstract-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   zksync_era: {
-    displayName: "zkSync Mainnet",
+    displayName: "zksync era",
     chainId: 324,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.ZKSYNC,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.ZKSYNC,
     rpcUrl: `https://zksync-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   treasure: {
-    displayName: "Treasure",
+    displayName: "treasure",
     chainId: 61166,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.ZKSYNC,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.ZKSYNC,
     rpcUrl: `https://rpc.treasure.lol`
   },
   ethereum_sepolia: {
-    displayName: "Ethereum Sepolia",
+    displayName: "ethereum sepolia",
     chainId: 11155111,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   ethereum_holesky: {
-    displayName: "Ethereum Holesky",
+    displayName: "ethereum holesky",
     chainId: 17000,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://eth-holesky.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   abstract_sepolia: {
-    displayName: "Abstract Sepolia",
+    displayName: "abstract sepolia",
     chainId: 11124,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://abstract-testnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   base_sepolia: {
-    displayName: "Base Sepolia",
+    displayName: "base sepolia",
     chainId: 84532,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://base-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   berachain_artio: {
-    displayName: "Berachain Bepolia",
+    displayName: "berachain bepolia",
     chainId: 80069,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://berachain-bepolia.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   },
   ronin_testnet: {
-    displayName: "Ronin Testnet",
+    displayName: "ronin testnet",
     chainId: 2021,
-    contractAddress: DELEGATE_REGISTRY_ADDRESSES.EVM,
+    delegateRegistryV2Address: DELEGATE_REGISTRY_ADDRESSES.EVM,
     rpcUrl: `https://ronin-saigon.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`
   }
 } as const;
