@@ -37,13 +37,9 @@ export const enumerationTools = {
           tokenId: delegation.tokenId.toString(),
           amount: delegation.amount.toString()
         }));
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, delegations: serializedDelegations })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, serializedDelegations })}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}] };
       }
     }
   },
@@ -68,13 +64,9 @@ export const enumerationTools = {
           tokenId: delegation.tokenId.toString(),
           amount: delegation.amount.toString()
         }));
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, delegations: serializedDelegations })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, serializedDelegations })}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}] };
       }
     }
   },
@@ -94,13 +86,9 @@ export const enumerationTools = {
         const validatedAddress = validateAddress(params.address, "address");
         const networkInfo = getNetworkConfig(params.network);
         const delegationHashes = await getIncomingDelegationHashes(validatedAddress, networkInfo);
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, delegationHashes })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, delegationHashes })}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}] };
       }
     }
   },
@@ -120,13 +108,9 @@ export const enumerationTools = {
         const validatedAddress = validateAddress(params.address, "address");
         const networkInfo = getNetworkConfig(params.network);
         const delegationHashes = await getOutgoingDelegationHashes(validatedAddress, networkInfo);
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, delegationHashes })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, delegationHashes })}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}] };
       }
     }
   },
@@ -151,13 +135,9 @@ export const enumerationTools = {
           tokenId: delegation.tokenId.toString(),
           amount: delegation.amount.toString()
         }));
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, delegations: serializedDelegations })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, serializedDelegations })}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}] };
       }
     }
   }

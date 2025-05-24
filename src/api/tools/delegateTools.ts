@@ -32,13 +32,9 @@ export const delegateTools = {
           chainId: networkInfo.chainId,
           delegateRegistryV2Address: networkInfo.delegateRegistryV2Address
         });
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, transactionParameters: { ...txData, value: txData.value?.toString() } as any })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, result: { ...txData, value: txData.value?.toString() }})}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error'})}] };
       }
     }
   },
@@ -67,13 +63,9 @@ export const delegateTools = {
           chainId: networkInfo.chainId,
           delegateRegistryV2Address: networkInfo.delegateRegistryV2Address
         });
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, transactionParameters: { ...txData, value: txData.value?.toString() } as any })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, result: { ...txData, value: txData.value?.toString() }})}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error'})}] };
       }
     }
   },
@@ -105,13 +97,9 @@ export const delegateTools = {
           chainId: networkInfo.chainId,
           delegateRegistryV2Address: networkInfo.delegateRegistryV2Address
         });
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, transactionParameters: { ...txData, value: txData.value?.toString() } as any })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, result: { ...txData, value: txData.value?.toString() }})}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error'})}] };
       }
     }
   },
@@ -146,13 +134,9 @@ export const delegateTools = {
           chainId: networkInfo.chainId,
           delegateRegistryV2Address: networkInfo.delegateRegistryV2Address
         });
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, transactionParameters: { ...txData, value: txData.value?.toString() } as any })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, result: { ...txData, value: txData.value?.toString() }})}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error'})}] };
       }
     }
   },
@@ -184,13 +168,9 @@ export const delegateTools = {
           chainId: networkInfo.chainId,
           delegateRegistryV2Address: networkInfo.delegateRegistryV2Address
         });
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, transactionParameters: { ...txData, value: txData.value?.toString() } as any })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, result: { ...txData, value: txData.value?.toString() }})}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error'})}] };
       }
     }
   },
@@ -225,13 +205,9 @@ export const delegateTools = {
           chainId: networkInfo.chainId,
           delegateRegistryV2Address: networkInfo.delegateRegistryV2Address
         });
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, transactionParameters: { ...txData, value: txData.value?.toString() } as any })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, result: { ...txData, value: txData.value?.toString() }})}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error'})}] };
       }
     }
   }

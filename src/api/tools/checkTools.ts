@@ -41,13 +41,9 @@ export const checkTools = {
           rights: validateBytes32(params.rights),
           network: networkInfo
         });
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, isDelegate })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, result: isDelegate })}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error'})}] };
       }
     }
   },
@@ -78,13 +74,9 @@ export const checkTools = {
           rights: validateBytes32(params.rights),
           network: networkInfo
         });
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, isDelegate })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, result: isDelegate })}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error'})}] };
       }
     }
   },
@@ -118,13 +110,9 @@ export const checkTools = {
           rights: validateBytes32(params.rights),
           network: networkInfo
         });
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, isDelegate })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, result: isDelegate })}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error'})}] };
       }
     }
   },
@@ -155,13 +143,9 @@ export const checkTools = {
           rights: validateBytes32(params.rights),
           network: networkInfo
         });
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, amount: amount.toString() })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, result: amount.toString() })}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error'})}] };
       }
     }
   },
@@ -195,13 +179,9 @@ export const checkTools = {
           rights: validateBytes32(params.rights),
           network: networkInfo
         });
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, amount: amount.toString() })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, result: amount.toString() })}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error'})}] };
       }
     }
   }

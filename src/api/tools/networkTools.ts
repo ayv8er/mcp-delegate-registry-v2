@@ -10,13 +10,9 @@ export const networkTools = {
     handler: async (): Promise<McpToolResponse> => {
       try {
         const networks = getNetworks();
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, networks }) }]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, networks })}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}] };
       }
     }
   },
@@ -30,13 +26,9 @@ export const networkTools = {
     handler: async (params: { networkIdentifier: string }): Promise<McpToolResponse> => {
       try {
         const networkInfo = getNetworkInfo(params.networkIdentifier);
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: true, networkInfo })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: true, networkInfo })}] };
       } catch (error: any) {
-        return {
-          content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}]
-        };
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' })}] };
       }
     }
   }
