@@ -1,6 +1,8 @@
-# Delegate Registry v2 MCP
+# Delegate Registry v2 HTTP MCP
 
 ## MCP SERVER TOOLS
+
+### NETWORK TOOLS
 
 ### getSupportedNetworks
 *Get list of all supported networks for Delegate Registry v2*
@@ -13,7 +15,8 @@ curl -X POST \
         "jsonrpc": "2.0",
         "method": "tools/call",
         "params": {
-            "name": "getSupportedNetworks"
+            "name": "getSupportedNetworks",
+            "arguments": {}
         },
         "id": "curl-request-get-supported-networks"
     }'
@@ -38,6 +41,8 @@ curl -X POST \
         "id": "curl-request-get-network-info"
     }'
 ```
+
+### WRITE TOOLS
 
 ### multicall
 *Prepares a multicall transaction to execute multiple actions on the registry*
@@ -183,6 +188,8 @@ curl -X POST \
     }'
 ```
 
+### CHECK TOOLS
+
 ### checkDelegateForAll
 *Check if delegatee is granted to act on behalf of delegator for all operations*
 ```bash
@@ -301,5 +308,115 @@ curl -X POST \
             }
         },
         "id": "curl-request-check-delegate-for-ERC-1155"
+    }'
+```
+
+### ENUMERATION TOOLS
+
+### getIncomingDelegations
+**
+```bash
+curl -X POST \
+    http://localhost:8080/delegate-registry-v2/mcp \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json, text/event-stream' \
+    -d '{
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+            "name": "getIncomingDelegations",
+            "arguments": {
+                "address": "0x64bb1dB59ad45cDC4Ae7cF2C87a6183A22F50447",
+                "network": "ethereum"
+            }
+        },
+        "id": "curl-request-get-incoming-delegations"
+    }'
+```
+
+### getOutgoingDelegations
+**
+```bash
+curl -X POST \
+    http://localhost:8080/delegate-registry-v2/mcp \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json, text/event-stream' \
+    -d '{
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+            "name": "getOutgoingDelegations",
+            "arguments": {
+                "address": "0x64bb1dB59ad45cDC4Ae7cF2C87a6183A22F50447",
+                "network": "ethereum"
+            }
+        },
+        "id": "curl-request-get-outgoing-delegations"
+    }'
+```
+
+### getIncomingDelegationHashes
+**
+```bash
+curl -X POST \
+    http://localhost:8080/delegate-registry-v2/mcp \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json, text/event-stream' \
+    -d '{
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+            "name": "getIncomingDelegationHashes",
+            "arguments": {
+                "address": "0x64bb1dB59ad45cDC4Ae7cF2C87a6183A22F50447",
+                "network": "ethereum"
+            }
+        },
+        "id": "curl-request-get-incoming-delegation-hashes"
+    }'
+```
+
+### getOutgoingDelegationHashes
+**
+```bash
+curl -X POST \
+    http://localhost:8080/delegate-registry-v2/mcp \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json, text/event-stream' \
+    -d '{
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+            "name": "getOutgoingDelegationHashes",
+            "arguments": {
+                "address": "0xDd555E39F07f46F1dD7c39034Ce19A094CcA710f",
+                "network": "ethereum"
+            }
+        },
+        "id": "curl-request-get-outgoing-delegation-hashes"
+    }'
+```
+
+### getDelegationsFromHashes
+**
+```bash
+curl -X POST \
+    http://localhost:8080/delegate-registry-v2/mcp \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json, text/event-stream' \
+    -d '{
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+            "name": "getDelegationsFromHashes",
+            "arguments": {
+                "delegationHashes": [
+                    "0xdd1824ba0dbecf7312cdbcb7b14623b83495361516992de10263ba2b5acd6501",
+                    "0x3c74aa4aa0eaa7c8fc640e59deeec899c446fc120b374b879dc8d2035b94c001"
+                ],
+                "network": "ethereum"
+            }
+        },
+        "id": "curl-request-get-delegations-from-hashes"
     }'
 ```

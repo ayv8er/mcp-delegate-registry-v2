@@ -1,7 +1,7 @@
 import { http, createPublicClient } from "viem";
 import { delegateRegistryAbi } from '../abi/delegateRegistryAbi.js';
-import type { CheckDelegationBaseParams, NetworkConfig } from "../types/types.js";
 import type  { Address } from "viem";
+import type { CheckDelegationBaseParams, NetworkConfig } from "../types/types.js";
 
 export function createNetworkClient(network: NetworkConfig) {
   // TODO: Add backup RPC URL and check other network properties

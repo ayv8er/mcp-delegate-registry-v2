@@ -27,7 +27,8 @@ export const delegateTools = {
       try {
         const networkInfo = getNetworkInfo(params.network);
         const txData = prepareMulticallTransactionData({
-          encodedCalls: params.encodedCalls.map(call => validateBytes32(call)),
+          // TODO: validate encodedCalls
+          encodedCalls: params.encodedCalls,
           chainId: networkInfo.chainId,
           delegateRegistryV2Address: networkInfo.delegateRegistryV2Address
         });

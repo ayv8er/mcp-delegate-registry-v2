@@ -2,6 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { networkTools } from "./tools/networkTools.js";
 import { delegateTools } from "./tools/delegateTools.js";
 import { checkTools } from "./tools/checkTools.js";
+import { enumerationTools } from "./tools/enumerationTools.js";
 
 export function createMcpServerInstance(): McpServer {
   const server = new McpServer({
@@ -19,6 +20,10 @@ export function createMcpServerInstance(): McpServer {
   });
 
   Object.values(checkTools).forEach(tool => {
+    server.tool(tool.name, tool.description, tool.schema, tool.handler);
+  });
+
+  Object.values(enumerationTools).forEach(tool => {
     server.tool(tool.name, tool.description, tool.schema, tool.handler);
   });
 

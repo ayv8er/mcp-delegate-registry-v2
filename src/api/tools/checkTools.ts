@@ -1,8 +1,14 @@
 import { z } from "zod";
 import { Address, Hex } from "viem";
 import { getNetworkConfig } from "../../utils/getters.js";
-import { addressSchema, hexSchema, validateAddress, validateBytes32, validateBigIntString } from "../../utils/validators.js";
 import type { McpToolResponse } from "../../types/types.js";
+import { 
+  addressSchema, 
+  hexSchema, 
+  validateAddress, 
+  validateBytes32, 
+  validateBigIntString, 
+} from "../../utils/validators.js";
 import {
   checkDelegateForAll,
   checkDelegateForContract,
@@ -180,7 +186,7 @@ export const checkTools = {
       network: string;
     }): Promise<McpToolResponse> => {
       try {
-        const networkInfo = getNetworkConfig(params.network);
+        const networkInfo = getNetworkConfig(params.network); 
         const amount = await checkDelegateForERC1155({
           delegatee: validateAddress(params.delegatee, "delegatee"),
           delegator: validateAddress(params.delegator, "delegator"),

@@ -26,13 +26,6 @@ export const validateBytes32 = (value: Hex): Hex => {
   return value;
 }; 
 
-export function validateNetwork(value: string): string {
-  if (!value || typeof value !== "string") {
-    throw new Error("Network identifier must be a non-empty string");
-  }
-  return value;
-}
-
 export const validateBigIntString = (value: string, paramName: string = "value"): string => {
   try {
     BigInt(value);
