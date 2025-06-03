@@ -1,5 +1,5 @@
 {
-  "name": "@delegatexyz/mcp-server",
+  "name": "delegate-registry-mcp-server",
   "version": "0.1.0",
   "description": "MCP server for interacting with Delegate Registry v2",
   "main": "dist/index.js",
