@@ -1,0 +1,11 @@
+src/
+scripts/
+.git/
+.gitignore
+tsconfig.json
+.env
+.env.*
+*.log
+node_modules/
+.DS_Store
+*.tsbuildinfo 

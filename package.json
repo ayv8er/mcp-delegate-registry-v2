@@ -1,15 +1,35 @@
 {
-  "name": "mcp-delegate-registry-v1",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "@delegatexyz/mcp-server",
+  "version": "0.1.0",
+  "description": "MCP server for interacting with Delegate Registry v2",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "delegatexyz-mcp-server": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "npm run build && npm run start"
+    "dev": "npm run build && npm run start",
+    "prepublishOnly": "npm run build"
   },
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": [
+    "mcp",
+    "modelcontextprotocol",
+    "delegate",
+    "registry",
+    "ethereum",
+    "web3"
+  ],
+  "author": "DelegateXYZ",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.11.1",
     "dotenv": "^16.5.0",
