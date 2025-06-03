@@ -501,10 +501,3 @@ curl -X POST \
 
 - `ALCHEMY_API_KEY` (required): Your Alchemy API key for blockchain access
 - `PORT` (optional): HTTP server port (default: 8080)
-
-## Publishing to npm
-
-```bash
-npm version patch
-npm publish
-```
