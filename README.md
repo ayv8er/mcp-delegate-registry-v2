@@ -13,7 +13,7 @@ Add the following configuration to your MCP settings:
   "mcpServers": {
     "delegate-registry": {
       "command": "npx",
-      "args": ["-y", "@delegatexyz/mcp-server"],
+      "args": ["-y", "delegate-registry-mcp-server"],
       "env": {
         "ALCHEMY_API_KEY": "YOUR_ALCHEMY_API_KEY"
       }
@@ -26,10 +26,10 @@ Add the following configuration to your MCP settings:
 
 ```bash
 # Install globally
-npm install -g @delegatexyz/mcp-server
+npm install -g delegate-registry-mcp-server
 
 # Run with environment variable
-PORT=8080 ALCHEMY_API_KEY=your_api_key delegatexyz-mcp-server
+PORT=8080 ALCHEMY_API_KEY=your_api_key delegate-registry-mcp-server
 ```
 
 ### NETWORK TOOLS
