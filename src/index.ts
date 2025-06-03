@@ -11,7 +11,7 @@ if (!process.env.ALCHEMY_API_KEY) {
   throw new Error("ALCHEMY_API_KEY environment variable is required");
 }
 
-const isStdio = !process.env.PORT && process.argv.includes('stdio');
+const isStdio = !process.env.PORT;
 
 const server = createMcpServerInstance();
 if (!server) {
